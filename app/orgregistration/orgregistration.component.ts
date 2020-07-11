@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
-@Component({
-  selector: 'app-orgregistration',
-  templateUrl: './orgregistration.component.html',
-  styleUrls: ['./orgregistration.component.css']
-})
-export class orgregistration implements OnInit {
+@Injectable()
+export class AuthenticationService {
 
-  constructor() { }
+    constructor(private http: HttpClient) {
+    }
 
-  ngOnInit() {
-  }
+    login(username: string, password: string) {
+        return this.http.post<any>(`http://efreelearn.cfapps.io/validateUser`, { username, password })
+            .pipe(map(user => {
 
+                return user;
+            }));
+    }
 }
